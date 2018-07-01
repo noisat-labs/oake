@@ -1,0 +1,12 @@
+[package]
+name = "oake"
+version = "0.1.0"
+authors = ["quininer <quininer@live.com>"]
+
+[dependencies]
+failure = "*"
+subtle = "*"
+rand = "*"
+sha3 = "*"
+digest = "*"
+curve25519-dalek = "*"
