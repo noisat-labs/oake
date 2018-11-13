@@ -9,4 +9,4 @@ subtle = "*"
 rand = "*"
 sha3 = "*"
 digest = "*"
-curve25519-dalek = "*"
+curve25519-dalek = { version = "1.0.0-pre.0", features = [ "serde" ] }

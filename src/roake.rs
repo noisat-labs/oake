@@ -12,20 +12,20 @@ pub fn send<ID: AsRef<str>>(
     shared: &mut [u8]
 ) -> Result<(), Error> {
     let mut hasher = Sha3_512::default();
-    hasher.process(ida.as_ref().as_bytes());
-    hasher.process(aa.as_bytes());
-    hasher.process(yy.as_bytes());
+    hasher.input(ida.as_ref().as_bytes());
+    hasher.input(aa.as_bytes());
+    hasher.input(yy.as_bytes());
     let c = Scalar::from_hash(hasher);
 
     let mut hasher = Sha3_512::default();
-    hasher.process(idb.as_ref().as_bytes());
-    hasher.process(bb.as_bytes());
-    hasher.process(xx.as_bytes());
+    hasher.input(idb.as_ref().as_bytes());
+    hasher.input(bb.as_bytes());
+    hasher.input(xx.as_bytes());
     let d = Scalar::from_hash(hasher);
 
     let mut hasher = Sha3_512::default();
-    hasher.process(xx.as_bytes());
-    hasher.process(yy.as_bytes());
+    hasher.input(xx.as_bytes());
+    hasher.input(yy.as_bytes());
     let e = Scalar::from_hash(hasher);
 
     let bb = decompress!(bb);
@@ -34,7 +34,7 @@ pub fn send<ID: AsRef<str>>(
     let k = bb * (a + d * x) + yy * (c * a + e * x);
 
     let mut hasher = Shake256::default();
-    hasher.process(k.compress().as_bytes());
+    hasher.input(k.compress().as_bytes());
     hasher.xof_result().read(shared);
 
     Ok(())
@@ -48,20 +48,20 @@ pub fn recv<ID: AsRef<str>>(
     shared: &mut [u8]
 ) -> Result<(), Error> {
     let mut hasher = Sha3_512::default();
-    hasher.process(ida.as_ref().as_bytes());
-    hasher.process(aa.as_bytes());
-    hasher.process(yy.as_bytes());
+    hasher.input(ida.as_ref().as_bytes());
+    hasher.input(aa.as_bytes());
+    hasher.input(yy.as_bytes());
     let c = Scalar::from_hash(hasher);
 
     let mut hasher = Sha3_512::default();
-    hasher.process(idb.as_ref().as_bytes());
-    hasher.process(bb.as_bytes());
-    hasher.process(xx.as_bytes());
+    hasher.input(idb.as_ref().as_bytes());
+    hasher.input(bb.as_bytes());
+    hasher.input(xx.as_bytes());
     let d = Scalar::from_hash(hasher);
 
     let mut hasher = Sha3_512::default();
-    hasher.process(xx.as_bytes());
-    hasher.process(yy.as_bytes());
+    hasher.input(xx.as_bytes());
+    hasher.input(yy.as_bytes());
     let e = Scalar::from_hash(hasher);
 
     let aa = decompress!(aa);
@@ -70,7 +70,7 @@ pub fn recv<ID: AsRef<str>>(
     let k = aa * (b + c * y) + xx * (d * b + e * y);
 
     let mut hasher = Shake256::default();
-    hasher.process(k.compress().as_bytes());
+    hasher.input(k.compress().as_bytes());
     hasher.xof_result().read(shared);
 
     Ok(())
