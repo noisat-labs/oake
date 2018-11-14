@@ -5,6 +5,8 @@ extern crate rand;
 extern crate sha3;
 extern crate digest;
 extern crate subtle;
+extern crate serde;
+extern crate serde_derive;
 extern crate curve25519_dalek;
 
 #[macro_use] mod common;
@@ -14,6 +16,7 @@ pub mod roake;
 
 use rand::{ RngCore, CryptoRng };
 use subtle::ConstantTimeEq;
+use serde_derive::{ Serialize, Deserialize };
 use curve25519_dalek::constants::RISTRETTO_BASEPOINT_TABLE;
 use curve25519_dalek::ristretto::CompressedRistretto;
 use curve25519_dalek::scalar::Scalar;
@@ -23,9 +26,13 @@ pub const SECRET_LENGTH: usize = 32;
 pub const PUBLIC_LENGTH: usize = 32;
 pub const MESSAGE_LENGTH: usize = 32;
 
+#[derive(Serialize, Deserialize, Clone)]
 pub struct SecretKey(Scalar);
+#[derive(Serialize, Deserialize, Clone)]
 pub struct PublicKey(CompressedRistretto);
+#[derive(Serialize, Deserialize, Clone)]
 pub struct EphemeralKey(Scalar);
+#[derive(Serialize, Deserialize, Clone)]
 pub struct Message(CompressedRistretto);
 
 #[derive(Debug, Fail)]

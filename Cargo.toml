@@ -4,9 +4,11 @@ version = "0.1.0"
 authors = ["quininer <quininer@live.com>"]
 
 [dependencies]
-failure = "*"
-subtle = "*"
-rand = "*"
-sha3 = "*"
-digest = "*"
+failure = "0.1"
+subtle = "2.0.0-pre.0"
+rand = "0.5"
+sha3 = "0.8"
+digest = "0.8"
+serde = "1"
+serde_derive = "1"
 curve25519-dalek = { version = "1.0.0-pre.0", features = [ "serde" ] }
